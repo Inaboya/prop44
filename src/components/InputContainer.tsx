@@ -29,8 +29,63 @@ const InputContainer: React.FC = () => {
           >
             <FormLabel>Student name</FormLabel>
             <Input
-              w={{ base: "10rem", lg: "50rem" }}
+              type="text"
+              w={{ base: "20rem", lg: "50rem" }}
               placeholder="Student name"
+            />
+          </FormControl>
+        </InputGroup>
+
+        <InputGroup>
+          {/* <FormLabel>Student Name*: </FormLabel> */}
+          <FormControl
+            variant="floating"
+            id="student-number"
+            placeholder="Student Number"
+            isRequired
+            isInvalid
+          >
+            <FormLabel>Student Number</FormLabel>
+            <Input
+              type="text"
+              w={{ base: "20rem", lg: "50rem" }}
+              placeholder="Student number"
+            />
+          </FormControl>
+        </InputGroup>
+
+        <InputGroup>
+          {/* <FormLabel>Student Name*: </FormLabel> */}
+          <FormControl
+            variant="floating"
+            id="subject"
+            placeholder="Subject"
+            isRequired
+            isInvalid
+          >
+            <FormLabel>Subject</FormLabel>
+            <Input
+              type="text"
+              w={{ base: "20rem", lg: "50rem" }}
+              placeholder="Subject"
+            />
+          </FormControl>
+        </InputGroup>
+
+        <InputGroup>
+          {/* <FormLabel>Student Name*: </FormLabel> */}
+          <FormControl
+            variant="floating"
+            id="student-mark"
+            placeholder="Student Mark"
+            isRequired
+            isInvalid
+          >
+            <FormLabel>Student Mark</FormLabel>
+            <Input
+              type="text"
+              w={{ base: "20rem", lg: "50rem" }}
+              placeholder="Mark obtained"
             />
           </FormControl>
         </InputGroup>
