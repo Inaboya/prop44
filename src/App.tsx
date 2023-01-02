@@ -1,8 +1,13 @@
+import React from "react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
-    <div>App</div>
-  )
-}
+    <ChakraProvider>
+      <Home />
+    </ChakraProvider>
+  );
+};
 
-export default App
+export default App;
