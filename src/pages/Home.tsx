@@ -1,10 +1,26 @@
-import { Box, HStack, Heading, Button, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Heading,
+  Button,
+  Stack,
+  Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 import React from "react";
 import { GrAdd } from "react-icons/gr";
-import InputContainer from "../components/InputContainer";
+import AddStudent from "../components/AddStudent";
 import TableComponent from "../components/TableComponent";
 
 const Home: React.FC = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box
       position={{ base: "relative", lg: "sticky" }}
@@ -19,7 +35,7 @@ const Home: React.FC = () => {
         p={{ base: "1rem", lg: "4rem" }}
         alignItems={{ base: "center", lg: "center" }}
       >
-        <Heading as="h3" size="2xl" color={"#00000"}>
+        <Heading as="h3" size={{ base: "1xl", lg: "3xl" }} color={"#00000"}>
           Student Records
         </Heading>
 
@@ -29,13 +45,23 @@ const Home: React.FC = () => {
           backgroundColor={"#6B6DAD"}
           colorScheme="white"
           leftIcon={<GrAdd color={"#fff"} />}
+          onClick={onOpen}
         >
-          Match
+          Add Student
         </Button>
       </HStack>
 
       <Stack spacing={6}>
-        <InputContainer />
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Add Student</ModalHeader>
+            <ModalBody>
+              <AddStudent />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+
         <TableComponent />
       </Stack>
     </Box>

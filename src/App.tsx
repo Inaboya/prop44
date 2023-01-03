@@ -1,12 +1,15 @@
 import React from "react";
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import Home from "./pages/Home";
+import { GlobalProvider } from "./context/GlobalState";
 
 const App = () => {
   return (
-    <ChakraProvider>
-      <Home />
-    </ChakraProvider>
+    <GlobalProvider>
+      <ChakraProvider>
+        <Home />
+      </ChakraProvider>
+    </GlobalProvider>
   );
 };
 
