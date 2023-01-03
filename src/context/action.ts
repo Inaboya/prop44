@@ -7,12 +7,12 @@ interface ADD_STUDENT {
 
 interface DELETE_STUDENT {
   type: typeof ActionType.DELETE_STUDENT;
-  payload: string;
+  payload: any;
 }
 
 interface UPDATE_STUDENT {
   type: typeof ActionType.UPDATE_STUDENT;
-  payload: string;
+  payload: any;
 }
 
 interface GET_STUDENT {

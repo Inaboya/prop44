@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Input,
   InputGroup,
@@ -8,51 +9,21 @@ import {
   FormErrorMessage,
   Button,
 } from "@chakra-ui/react";
-import React from "react";
-import { v4 as uuidv4 } from "uuid";
 import { GlobalContext } from "../context/GlobalState";
 
-type AddStudentProps = {
-  onClose: () => void;
-};
-
-const AddStudent: React.FC<AddStudentProps> = ({ onClose }) => {
+const EditStudent = () => {
+  // const { editStudent } = React.useContext(GlobalContext);
   const [studentDetails, setStudentDetails] = React.useState({
     studentName: "",
     studentNumber: "",
     subject: "",
     studentMark: "",
   });
-  const { addStudent } = React.useContext(GlobalContext);
 
   const handleChanges = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStudentDetails({ ...studentDetails, [e.target.name]: e.target.value });
   };
 
-  const handleClick = () => {
-    if (
-      studentDetails.studentName === "" ||
-      studentDetails.studentNumber === "" ||
-      studentDetails.subject === "" ||
-      studentDetails.studentMark === ""
-    ) {
-      alert("Please fill all the fields");
-    }
-
-    const newStudent = {
-      id: uuidv4(),
-      studentName: studentDetails.studentName,
-      studentNumber: `RF-${studentDetails.studentNumber}`,
-      subject: studentDetails.subject,
-      studentMark: studentDetails.studentMark,
-    };
-
-    addStudent && addStudent(newStudent);
-
-    setStudentDetails({} as any);
-
-    onClose();
-  };
   return (
     <Stack spacing={6}>
       <InputGroup>
@@ -134,11 +105,9 @@ const AddStudent: React.FC<AddStudentProps> = ({ onClose }) => {
         </FormControl>
       </InputGroup>
 
-      <Button w={{ base: "20rem", lg: "25rem" }} onClick={handleClick}>
-        Add Student
-      </Button>
+      <Button w={{ base: "20rem", lg: "25rem" }}>Edit Student</Button>
     </Stack>
   );
 };
 
-export default AddStudent;
+export default EditStudent;

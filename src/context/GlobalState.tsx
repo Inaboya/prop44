@@ -1,17 +1,15 @@
-// import fs from "fs";
+import * as fs from "fs";
 import { createContext, useReducer } from "react";
 import AddReducer from "./AddReducer";
-import StudentData from "../data/students.json";
+import { setStudents, getStudents } from "../data/students";
 import { ActionType } from "./actionType";
-
-const fs = require("fs");
 
 interface StudentState {
   students: any[];
   loading: boolean;
   error: string | null;
   addStudent?: (payload: object) => Promise<any>;
-  getStudents?: () => Promise<any>;
+  fetchStudents?: () => any[];
 }
 
 const initialState: StudentState = {
@@ -25,30 +23,72 @@ export const GlobalContext = createContext({} as StudentState);
 export const GlobalProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(AddReducer, initialState);
 
-  const addStudent = (payload: object) => {
-    return new Promise((resolve, reject) => {
-      const data = fs.readFileSync("../data/students.json", {
-        encoding: "utf-8",
-      });
-      const students = JSON.parse(data);
-      students.push(payload);
-      fs.writeFileSync("../data/students.json", JSON.stringify(students));
+  const addStudent = async (payload: object) => {
+    try {
+      const students = getStudents() as unknown as any[];
+
+      console.log({ students });
+      const newStudents = students ? [...students, payload] : [payload];
+      console.log({ newStudents });
+      setStudents(newStudents);
       dispatch({
         type: ActionType.ADD_STUDENT,
-        payload,
+        payload: newStudents,
       });
-      resolve(students);
-    });
+
+      return newStudents;
+    } catch (error) {
+      throw error;
+    }
   };
 
-  const getStudents = () => {
-    return new Promise((resolve, reject) => {
+  const fetchStudents = () => {
+    try {
+      const students = getStudents() as unknown as any[];
+
+      console.log({ students });
       dispatch({
         type: ActionType.GET_STUDENTS,
-        payload: StudentData,
+        payload: students,
       });
-      resolve(StudentData);
-    });
+
+      return students;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const editStudent = (id: string, payload: object) => {
+    try {
+      const students = getStudents() as unknown as any[];
+      const newStudents = students.map((student: any) => {
+        if (student.id === id) {
+          return { ...student, ...payload };
+        }
+        return student;
+      });
+      setStudents(newStudents);
+      dispatch({
+        type: ActionType.UPDATE_STUDENT,
+        payload: newStudents,
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const deleteStudent = (id: string) => {
+    try {
+      const students = getStudents() as unknown as any[];
+      const newStudents = students.filter((student: any) => student.id !== id);
+      setStudents(newStudents);
+      dispatch({
+        type: ActionType.DELETE_STUDENT,
+        payload: newStudents,
+      });
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (
@@ -58,7 +98,7 @@ export const GlobalProvider = ({ children }: any) => {
         loading: state.loading,
         error: state.error,
         addStudent,
-        getStudents,
+        fetchStudents,
       }}
     >
       {children}

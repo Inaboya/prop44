@@ -8,8 +8,21 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React from "react";
+import { GlobalContext } from "../context/GlobalState";
 
-const TableComponent: React.FC = () => {
+type TableComponentProps = {
+  onClose: () => void;
+  isOpen: boolean;
+};
+
+const TableComponent: React.FC<TableComponentProps> = () => {
+  const { students, fetchStudents } = React.useContext(GlobalContext);
+
+  React.useEffect(() => {
+    fetchStudents && fetchStudents();
+  }, []);
+
+  console.log({ students });
   return (
     <TableContainer>
       <Table
@@ -26,42 +39,17 @@ const TableComponent: React.FC = () => {
           </Tr>
         </Thead>
 
-        <Tbody>
-          <Tr>
-            <Td>1</Td>
-            <Td>John Doe</Td>
-            <Td>Mathematics</Td>
-            <Td>80</Td>
-          </Tr>
-
-          <Tr>
-            <Td>1</Td>
-            <Td>John Doe</Td>
-            <Td>Mathematics</Td>
-            <Td>80</Td>
-          </Tr>
-
-          <Tr>
-            <Td>1</Td>
-            <Td>John Doe</Td>
-            <Td>Mathematics</Td>
-            <Td>80</Td>
-          </Tr>
-
-          <Tr>
-            <Td>1</Td>
-            <Td>John Doe</Td>
-            <Td>Mathematics</Td>
-            <Td>80</Td>
-          </Tr>
-
-          <Tr>
-            <Td>1</Td>
-            <Td>John Doe</Td>
-            <Td>Mathematics</Td>
-            <Td>80</Td>
-          </Tr>
-        </Tbody>
+        {students &&
+          students?.map((student: any, index) => (
+            <Tbody key={index}>
+              <Tr>
+                <Td>{student.studentNumber}</Td>
+                <Td>{student.studentName}</Td>
+                <Td>{student.subject}</Td>
+                <Td>{student.studentMark}</Td>
+              </Tr>
+            </Tbody>
+          ))}
       </Table>
     </TableContainer>
   );

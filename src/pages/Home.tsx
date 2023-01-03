@@ -21,6 +21,10 @@ import TableComponent from "../components/TableComponent";
 
 const Home: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleEdit = (id: string) => {
+    console.log(id);
+  };
   return (
     <Box
       position={{ base: "relative", lg: "sticky" }}
@@ -49,6 +53,18 @@ const Home: React.FC = () => {
         >
           Add Student
         </Button>
+
+        <Button
+          w="300px"
+          borderRadius="100px"
+          backgroundColor={"#6B6DAD"}
+          colorScheme="white"
+          leftIcon={<GrAdd color={"#fff"} />}
+          onClick={onOpen}
+        >
+          Edit Student
+        </Button>
+        
       </HStack>
 
       <Stack spacing={6}>
@@ -57,12 +73,16 @@ const Home: React.FC = () => {
           <ModalContent>
             <ModalHeader>Add Student</ModalHeader>
             <ModalBody>
-              <AddStudent />
+              <AddStudent onClose={onClose} />
             </ModalBody>
           </ModalContent>
         </Modal>
 
-        <TableComponent />
+        <TableComponent
+          isOpen={isOpen}
+          onClose={onClose}
+          // handleEdit={handleEdit}
+        />
       </Stack>
     </Box>
   );
