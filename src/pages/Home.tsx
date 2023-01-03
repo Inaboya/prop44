@@ -17,14 +17,21 @@ import {
 import React from "react";
 import { GrAdd } from "react-icons/gr";
 import AddStudent from "../components/AddStudent";
+import EditStudent from "../components/EditStudent";
 import TableComponent from "../components/TableComponent";
+import { GlobalContext } from "../context/GlobalState";
 
 const Home: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { fetchStudents, students } = React.useContext(GlobalContext);
 
   const handleEdit = (id: string) => {
     console.log(id);
   };
+  React.useEffect(() => {
+    fetchStudents && fetchStudents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Box
       position={{ base: "relative", lg: "sticky" }}
@@ -53,18 +60,6 @@ const Home: React.FC = () => {
         >
           Add Student
         </Button>
-
-        <Button
-          w="300px"
-          borderRadius="100px"
-          backgroundColor={"#6B6DAD"}
-          colorScheme="white"
-          leftIcon={<GrAdd color={"#fff"} />}
-          onClick={onOpen}
-        >
-          Edit Student
-        </Button>
-        
       </HStack>
 
       <Stack spacing={6}>
@@ -78,11 +73,11 @@ const Home: React.FC = () => {
           </ModalContent>
         </Modal>
 
-        <TableComponent
-          isOpen={isOpen}
-          onClose={onClose}
-          // handleEdit={handleEdit}
-        />
+        {students && students.length > 0 ? (
+          <TableComponent students={students} />
+        ) : (
+          <Text>No students found</Text>
+        )}
       </Stack>
     </Box>
   );

@@ -9,7 +9,9 @@ interface StudentState {
   loading: boolean;
   error: string | null;
   addStudent?: (payload: object) => Promise<any>;
-  fetchStudents?: () => any[];
+  fetchStudents?: () => any;
+  editStudent?: (id: string, payload: object) => any;
+  deleteStudent?: (id: string) => any;
 }
 
 const initialState: StudentState = {
@@ -42,7 +44,7 @@ export const GlobalProvider = ({ children }: any) => {
     }
   };
 
-  const fetchStudents = () => {
+  const fetchStudents = async () => {
     try {
       const students = getStudents() as unknown as any[];
 
@@ -78,6 +80,7 @@ export const GlobalProvider = ({ children }: any) => {
   };
 
   const deleteStudent = (id: string) => {
+    console.log({ id });
     try {
       const students = getStudents() as unknown as any[];
       const newStudents = students.filter((student: any) => student.id !== id);
@@ -99,6 +102,8 @@ export const GlobalProvider = ({ children }: any) => {
         error: state.error,
         addStudent,
         fetchStudents,
+        editStudent,
+        deleteStudent,
       }}
     >
       {children}

@@ -11,7 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { GlobalContext } from "../context/GlobalState";
 
-const EditStudent = () => {
+type EditStudentProps = {
+  onClose: () => void;
+  editStudent: any;
+};
+
+const EditStudent: React.FC<EditStudentProps> = ({ editStudent }) => {
   // const { editStudent } = React.useContext(GlobalContext);
   const [studentDetails, setStudentDetails] = React.useState({
     studentName: "",
@@ -105,7 +110,9 @@ const EditStudent = () => {
         </FormControl>
       </InputGroup>
 
-      <Button w={{ base: "20rem", lg: "25rem" }}>Edit Student</Button>
+      <Button w={{ base: "20rem", lg: "25rem" }} onClick={editStudent}>
+        Edit Student
+      </Button>
     </Stack>
   );
 };
